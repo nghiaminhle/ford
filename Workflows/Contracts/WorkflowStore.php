@@ -6,14 +6,14 @@
  * Time: 10:29 PM
  */
 
-namespace Catalog\Workflows\Contracts;
+namespace Ford\Workflows\Contracts;
 
 
-use Catalog\Workflows\WorkFlow;
+use Ford\Workflows\WorkFlow;
 
 /**
  * Interface WorkflowStore
- * @package Catalog\Workflows\Contracts
+ * @package Ford\Workflows\Contracts
  */
 interface WorkflowStore
 {
@@ -27,4 +27,6 @@ interface WorkflowStore
      * @param WorkFlow $workFlow
      */
     public function save(WorkFlow $workFlow);
+
+    
 }
