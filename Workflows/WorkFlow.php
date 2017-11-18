@@ -6,13 +6,13 @@
  * Time: 11:13 AM
  */
 
-namespace Catalog\Workflows;
+namespace Ford\Workflows;
 
-use Catalog\Workflows\Contracts\Workflow as WorkflowInterface;
+use Ford\Workflows\Contracts\Workflow as WorkflowInterface;
 
 /**
  * Class WorkFlow
- * @package Catalog\Workflows
+ * @package Ford\Workflows
  */
 class WorkFlow implements WorkflowInterface
 {

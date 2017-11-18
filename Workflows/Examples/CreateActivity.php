@@ -6,15 +6,15 @@
  * Time: 3:41 PM
  */
 
-namespace Catalog\Workflows\Examples;
+namespace Ford\Workflows\Examples;
 
 
-use Catalog\Workflows\ActivityContext;
-use Catalog\Workflows\Contracts\Activity;
+use Ford\Workflows\ActivityContext;
+use Ford\Workflows\Contracts\Activity;
 
 /**
  * Class CreateActivity
- * @package Catalog\Workflows\Examples
+ * @package Ford\Workflows\Examples
  */
 class CreateActivity implements Activity
 {

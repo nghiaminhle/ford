@@ -11,7 +11,7 @@ use Ford\Workflows\ActivityContext;
 
 /**
  * Interface Activity
- * @package Catalog\Workflows\Contracts
+ * @package Ford\Workflows\Contracts
  */
 interface Activity
 {

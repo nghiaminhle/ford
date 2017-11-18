@@ -6,14 +6,14 @@
  * Time: 11:58 AM
  */
 
-namespace Catalog\Workflows\Contracts;
+namespace Ford\Workflows\Contracts;
 
 
-use Catalog\Workflows\ActivityContext;
+use Ford\Workflows\ActivityContext;
 
 /**
  * Interface Workflow
- * @package Catalog\Workflows\Contracts
+ * @package Ford\Workflows\Contracts
  */
 interface Workflow
 {

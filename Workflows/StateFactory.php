@@ -6,14 +6,14 @@
  * Time: 3:23 PM
  */
 
-namespace Catalog\Workflows;
+namespace Ford\Workflows;
 
-use Catalog\Workflows\Contracts\State;
-use Catalog\Workflows\Contracts\StateFactory as StateFactoryInterface;
+use Ford\Workflows\Contracts\State;
+use Ford\Workflows\Contracts\StateFactory as StateFactoryInterface;
 
 /**
  * Class StateFactory
- * @package Catalog\Workflows
+ * @package Ford\Workflows
  */
 class StateFactory implements StateFactoryInterface
 {
@@ -49,7 +49,7 @@ class StateFactory implements StateFactoryInterface
      */
     private function config(array $configurations)
     {
-        $state = new \Catalog\Workflows\State($configurations['state']);
+        $state = new \Ford\Workflows\State($configurations['state']);
         $transitions = $configurations['transitions'];
         foreach ($transitions as $transition) {
             $t = new Transition($transition['state'], $transition['condition']);

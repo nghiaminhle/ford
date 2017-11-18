@@ -6,7 +6,7 @@
  * Time: 3:46 PM
  */
 
-namespace Catalog\Workflows\Examples;
+namespace Ford\Workflows\Examples;
 
 
 class StateConstant

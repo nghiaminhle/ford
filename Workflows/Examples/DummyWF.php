@@ -6,16 +6,16 @@
  * Time: 11:46 AM
  */
 
-namespace Catalog\Workflows\Examples;
+namespace Ford\Workflows\Examples;
 
 
-use Catalog\Workflows\ActivityContext;
-use Catalog\Workflows\StateFactory;
-use Catalog\Workflows\WorkFlow;
+use Ford\Workflows\ActivityContext;
+use Ford\Workflows\StateFactory;
+use Ford\Workflows\WorkFlow;
 
 /**
  * Class DummyWF
- * @package Catalog\Workflows\Examples
+ * @package Ford\Workflows\Examples
  */
 class DummyWF
 {

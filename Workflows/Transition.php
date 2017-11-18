@@ -6,14 +6,14 @@
  * Time: 4:38 PM
  */
 
-namespace Catalog\Workflows;
+namespace Ford\Workflows;
 
 
-use Catalog\Workflows\Contracts\Transition as TransitionInterface;
+use Ford\Workflows\Contracts\Transition as TransitionInterface;
 
 /**
  * Class Transition
- * @package Catalog\Workflows
+ * @package Ford\Workflows
  */
 class Transition implements TransitionInterface
 {

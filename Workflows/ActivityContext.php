@@ -6,12 +6,12 @@
  * Time: 11:25 AM
  */
 
-namespace Catalog\Workflows;
+namespace Ford\Workflows;
 
 
 /**
  * Class ActivityContext
- * @package Catalog\Workflows
+ * @package Ford\Workflows
  */
 class ActivityContext
 {

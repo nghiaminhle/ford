@@ -6,17 +6,17 @@
  * Time: 11:46 AM
  */
 
-namespace Catalog\Workflows;
+namespace Ford\Workflows;
 
 
-use Catalog\Workflows\Contracts\Activity;
+use Ford\Workflows\Contracts\Activity;
 
-use Catalog\Workflows\Contracts\State as StateInterface;
-use Catalog\Workflows\Contracts\Transition;
+use Ford\Workflows\Contracts\State as StateInterface;
+use Ford\Workflows\Contracts\Transition;
 
 /**
  * Class State
- * @package Catalog\Workflows
+ * @package Ford\Workflows
  */
 class State implements StateInterface
 {

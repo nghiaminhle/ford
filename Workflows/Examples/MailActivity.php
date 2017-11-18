@@ -6,10 +6,10 @@
  * Time: 3:58 PM
  */
 
-namespace Catalog\Workflows\Examples;
+namespace Ford\Workflows\Examples;
 
-use Catalog\Workflows\ActivityContext;
-use Catalog\Workflows\Contracts\Activity;
+use Ford\Workflows\ActivityContext;
+use Ford\Workflows\Contracts\Activity;
 
 class MailActivity implements Activity
 {
