@@ -27,6 +27,4 @@ interface WorkflowStore
      * @param WorkFlow $workFlow
      */
     public function save(WorkFlow $workFlow);
-
-    
 }
