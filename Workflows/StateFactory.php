@@ -52,8 +52,7 @@ class StateFactory implements StateFactoryInterface
         $state = new \Ford\Workflows\State($configurations['state']);
         $transitions = $configurations['transitions'];
         foreach ($transitions as $transition) {
-            $t = new Transition($transition['state'], $transition['condition']);
-            $state->addTransition($t);
+            $state->addTransition(new Transition($transition['state'], $transition['condition']));
         }
         if ($configurations['entry_activity'] !== null) {
             $state->setEntryActivity($configurations['entry_activity']);
