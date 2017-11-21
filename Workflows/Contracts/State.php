@@ -12,9 +12,9 @@ use Ford\Workflows\ActivityContext;
 
 /**
  * Interface State
- * @package Ford\Workflows\Contracts
+ * @package Ford\Workflows
  */
-interface State
+interface State extends Activity
 {
     /**
      * @return string
@@ -22,33 +22,12 @@ interface State
     public function getName(): string;
 
     /**
-     * @param ActivityContext $context
-     */
-    public function onEntry(ActivityContext $context);
-
-    /**
-     * @param ActivityContext $context
-     */
-    public function onExit(ActivityContext $context);
-
-    /**
-     * @param ActivityContext $context
-     * @return string
-     */
-    public function getNextState(ActivityContext $context);
-
-    /**
-     * @param Transition $transition
-     */
-    public function addTransition(Transition $transition);
-
-    /**
      * @param Activity $activity
      */
-    public function setEntryActivity(Activity $activity);
+    public function addActivity(Activity $activity);
 
     /**
-     * @param Activity $activity
+     * @param ActivityContext $context
      */
-    public function setExitActivity(Activity $activity);
+    public function execute(ActivityContext $context);
 }

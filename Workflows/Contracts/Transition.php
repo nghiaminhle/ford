@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 /**
  * Created by PhpStorm.
  * User: nghia.le
@@ -13,20 +13,26 @@ use Ford\Workflows\ActivityContext;
 
 /**
  * Interface Transition
- * @package Ford\Workflows\Contracts
+ * @package Ford\Workflows
  */
 interface Transition
 {
-    /**
-     * @param ActivityContext $context
-     * @return bool
-     */
-    public function isSatisfy(ActivityContext $context): bool ;
+    public function triggeredBy():string;
 
+    /**
+     * @return string
+     */
+    public function fromState(): string;
 
     /**
      * @param ActivityContext $context
      * @return string
      */
-    public function nextState(ActivityContext $context): string ;
+    public function nextState(ActivityContext $context): string;
+
+    /**
+     * @param ActivityContext $context
+     * @return bool
+     */
+    public function isSatisfy(ActivityContext $context): bool;
 }

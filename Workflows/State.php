@@ -26,33 +26,17 @@ class State implements StateInterface
     protected $name;
 
     /**
-     * @var Activity
+     * @var Activity[]
      */
-    protected $entryActivity;
-
-    /**
-     * @var Activity
-     */
-    protected $exitActivity;
-
-    /**
-     * @var Transition[]
-     */
-    protected $transitions = [];
+    protected $activities = [];
 
     /**
      * State constructor.
      * @param string $name
-     * @param Activity|null $entryActivity
-     * @param Activity|null $exitActivity
      */
-    public function __construct(string $name,
-                                Activity $entryActivity = null,
-                                Activity $exitActivity = null)
+    public function __construct(string $name)
     {
         $this->name = $name;
-        $this->entryActivity = $entryActivity;
-        $this->exitActivity = $exitActivity;
     }
 
     /**
@@ -63,64 +47,21 @@ class State implements StateInterface
         return $this->name;
     }
 
-
     /**
      * @param ActivityContext $context
      */
-    public function onEntry(ActivityContext $context)
+    public function execute(ActivityContext $context)
     {
-        if ($this->entryActivity === null) {
-            return;
+        foreach ($this->activities as $activity){
+            $activity->execute($context);
         }
-        $this->entryActivity->execute($context);
-    }
-
-    /**
-     * @param ActivityContext $context
-     */
-    public function onExit(ActivityContext $context)
-    {
-        if ($this->exitActivity === null) {
-            return;
-        }
-        $this->exitActivity->execute($context);
-    }
-
-    /**
-     * @param ActivityContext $context
-     * @return string
-     */
-    public function getNextState(ActivityContext $context)
-    {
-        foreach ($this->transitions as $transition) {
-            if ($transition->isSatisfy($context)) {
-                return $transition->nextState($context);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @param Transition $transition
-     */
-    public function addTransition(Transition $transition)
-    {
-        $this->transitions[] = $transition;
     }
 
     /**
      * @param Activity $activity
      */
-    public function setEntryActivity(Activity $activity)
+    public function addActivity(Activity $activity)
     {
-        $this->entryActivity = $activity;
-    }
-
-    /**
-     * @param Activity $activity
-     */
-    public function setExitActivity(Activity $activity)
-    {
-        $this->exitActivity = $activity;
+        $this->activities[] = $activity;
     }
 }

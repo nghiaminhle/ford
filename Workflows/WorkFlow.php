@@ -27,28 +27,40 @@ class WorkFlow implements WorkflowInterface
     private $currentState;
 
     /**
-     * @var StateFactory
+     * @var WorkflowConfig
      */
-    private $stateFactory;
+    private $wfConfig;
 
-    public function __construct(StateFactory $stateFactory)
+    /**
+     * WorkFlow constructor.
+     */
+    public function __construct()
     {
-        $this->stateFactory = $stateFactory;
     }
 
     /**
      * @param ActivityContext $context
+     * @throws ConfigException
      */
     public function run(ActivityContext $context)
     {
-        $state = $this->stateFactory->factory($this->currentState);
-        $state->onExit($context);
-        $nextState = $state->getNextState($context);
-        if ($nextState !== null) {
-            $this->currentState = $nextState;
-            $nextStateObj = $this->stateFactory->factory($nextState);
-            $nextStateObj->onEntry($context);
+        $transitions = $this->wfConfig->getTransitions($this->currentState, $context->getTrigger());
+        foreach ($transitions as $transition) {
+            if ($transition->isSatisfy($context)) {
+                $this->currentState = $transition->nextState($context);
+                $nextState = $this->wfConfig->stateFactory($this->currentState);
+                $nextState->execute($context);
+                return;
+            }
         }
+    }
+
+    /**
+     * @param WorkflowConfig $workflowConfig
+     */
+    public function setWorkflowConfiguration(WorkflowConfig $workflowConfig)
+    {
+        $this->wfConfig = $workflowConfig;
     }
 
     /**

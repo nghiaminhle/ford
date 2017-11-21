@@ -10,8 +10,8 @@ namespace Ford\Workflows\Examples;
 
 
 use Ford\Workflows\ActivityContext;
-use Ford\Workflows\StateFactory;
 use Ford\Workflows\WorkFlow;
+use Ford\Workflows\WorkflowConfig;
 
 /**
  * Class DummyWF
@@ -29,11 +29,13 @@ class DummyWF
      */
     public function __construct()
     {
-        $stateFactory = new StateFactory($this->getConfigurations());
+        $this->workflowInstance = new WorkFlow();
+        $wfConfig = new WorkflowConfig();
+        $wfConfig->load($this->getConfigurations());
 
-        $this->workflowInstance = new WorkFlow($stateFactory);
         $this->workflowInstance->setId('abc');
         $this->workflowInstance->setCurrentState(StateConstant::INIT);
+        $this->workflowInstance->setWorkflowConfiguration($wfConfig);
     }
 
     /**
@@ -43,21 +45,24 @@ class DummyWF
     {
         echo "\n" . 'Current State: ' . $this->workflowInstance->getCurrentState() . "\n";
         $context = new ActivityContext();
+        $context->setTrigger('approve');
+        $context->setParam('msg', 'request is approved by the first manager');
         $this->workflowInstance->run($context);
 
         echo "\n" . 'Current State: ' . $this->workflowInstance->getCurrentState() . "\n";
 
         $context = new ActivityContext();
-        $context->setParam('isApproved', true);
-
+        $context->setTrigger('reject');
+        $context->setParam('msg', 'request is rejected by the second manager');
         $this->workflowInstance->run($context);
+
         echo "\n" . 'Current State: ' . $this->workflowInstance->getCurrentState() . "\n";
 
         $context = new ActivityContext();
-        $context->setParam('isApproved', false);
-        $context->setParam('msg', 'request is rejected');
-
+        $context->setTrigger('re-submit');
+        $context->setParam('msg', 'request is approved by the second manager');
         $this->workflowInstance->run($context);
+
         echo "\n" . 'Current State: ' . $this->workflowInstance->getCurrentState() . "\n";
     }
 
@@ -76,56 +81,52 @@ class DummyWF
                 'state' => StateConstant::INIT,
                 'transitions' => [
                     [
-                        'state' => StateConstant::FIRST_APPROVE,
+                        'to_state' => StateConstant::FIRST_APPROVE,
                         'condition' => function (ActivityContext $context) {
                             return true;
-                        }
+                        },
+                        'trigger'=> 'approve'
                     ]
                 ],
-                'entry_activity' => null,
-                'exit_activity' => new CreateActivity()
+                'activities'=>[]
             ],
             [
                 'state' => StateConstant::FIRST_APPROVE,
                 'transitions' => [
                     [
-                        'state' => StateConstant::SECOND_APPROVE,
-                        'condition' => $approveCondition
+                        'to_state' => StateConstant::SECOND_APPROVE,
+                        'condition' => function (ActivityContext $context) {
+                            return true;
+                        },
+                        'trigger'=> 'approve'
                     ],
                     [
-                        'state' => StateConstant::REJECT,
-                        'condition' => $rejectCondition
+                        'to_state' => StateConstant::REJECT,
+                        'condition' => function (ActivityContext $context) {
+                            return true;
+                        },
+                        'trigger'=> 'reject'
                     ]
                 ],
-                'entry_activity' => null,
-                'exit_activity' => null
+                'activities'=>[new MailActivity()]
             ],
             [
                 'state' => StateConstant::SECOND_APPROVE,
-                'transitions' => [
-                    [
-                        'state' => StateConstant::APPROVE,
-                        'condition' => $approveCondition
-                    ],
-                    [
-                        'state' => StateConstant::REJECT,
-                        'condition' => $rejectCondition
-                    ]
-                ],
-                'entry_activity' => null,
-                'exit_activity' => new CompleteActivity()
+                'transitions' => [],
+                'activities'=>[new MailActivity(),new CompleteActivity()]
             ],
             [
                 'state' => StateConstant::REJECT,
-                'transitions' => [],
-                'entry_activity' => new MailActivity(),
-                'exit_activity' => null
-            ],
-            [
-                'state' => StateConstant::APPROVE,
-                'transitions' => [],
-                'entry_activity' => new MailActivity(),
-                'exit_activity' => null
+                'transitions' => [
+                    [
+                        'to_state' => StateConstant::SECOND_APPROVE,
+                        'condition' => function (ActivityContext $context) {
+                            return true;
+                        },
+                        'trigger'=> 're-submit'
+                    ]
+                ],
+                'activities'=>[new MailActivity()]
             ]
         ];
 

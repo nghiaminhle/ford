@@ -8,13 +8,17 @@
 
 namespace Ford\Workflows;
 
-
 /**
  * Class ActivityContext
  * @package Ford\Workflows
  */
 class ActivityContext
 {
+    /**
+     * @var string
+     */
+    private $trigger;
+
     /**
      * @var array
      */
@@ -39,5 +43,21 @@ class ActivityContext
             return $this->params[$key];
         }
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrigger()
+    {
+        return $this->trigger;
+    }
+
+    /**
+     * @param string $trigger
+     */
+    public function setTrigger($trigger)
+    {
+        $this->trigger = $trigger;
     }
 }
