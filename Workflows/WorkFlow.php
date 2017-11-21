@@ -47,7 +47,7 @@ class WorkFlow implements WorkflowInterface
         $transitions = $this->wfConfig->getTransitions($this->currentState, $context->getTrigger());
         foreach ($transitions as $transition) {
             if ($transition->isSatisfy($context)) {
-                $this->currentState = $transition->nextState($context);
+                $this->currentState = $transition->nextState();
                 $nextState = $this->wfConfig->stateFactory($this->currentState);
                 $nextState->execute($context);
                 return;

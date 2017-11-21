@@ -76,10 +76,9 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @param ActivityContext $context
      * @return string
      */
-    public function nextState(ActivityContext $context): string
+    public function nextState(): string
     {
         return $this->nextState;
     }

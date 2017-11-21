@@ -25,10 +25,9 @@ interface Transition
     public function fromState(): string;
 
     /**
-     * @param ActivityContext $context
      * @return string
      */
-    public function nextState(ActivityContext $context): string;
+    public function nextState(): string;
 
     /**
      * @param ActivityContext $context
